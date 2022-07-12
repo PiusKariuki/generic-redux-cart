@@ -21,7 +21,7 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case removeFromCart: {
       const id = payload;
-      return state.filter((item) => item.id !== id);
+      return state?.filter((item) => item.id !== id);
     }
 
     case clearCart:
@@ -32,17 +32,16 @@ const reducer = (state = initialState, { type, payload }) => {
   }
 };
 
-
 const persistedState = () =>
   localStorage.getItem("generic-redux-cart") !== null
     ? localStorage.getItem("generic-redux-cart")
     : [];
 
-const store = Redux.createStore(reducer, persistedState());
-
+const store = Redux.createStore(reducer);
 
 export const state = store.getState();
 export const subscribe = store.subscribe(() => {
+  console.log(store.getState())
   localStorage.setItem("generic-redux-cart", store.getState());
   return store.getState();
 });
@@ -59,12 +58,12 @@ export const clear = () => {
   store.dispatch({ type: clearCart });
 };
 
-// const newItem = {
-//   name: "Mazda cx9",
-//   price: 240000,
-//   quantity: 1,
-//   id: 8,
-// };
+const newItem = {
+  name: "Mazda cx9",
+  price: 240000,
+  quantity: 1,
+  id: 8,
+};
 
-// deleteItem(5);
-// addItem(newItem);
+deleteItem(5);
+addItem(newItem);
