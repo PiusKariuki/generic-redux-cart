@@ -60,14 +60,14 @@ const clear = () => {
   store.dispatch({ type: clearCart });
 };
 
-const newItem = {
-  name: "Mazda cx9",
-  price: 240000,
-  quantity: 1,
-  id: 8,
-};
+// const newItem = {
+//   name: "Mazda cx9",
+//   price: 240000,
+//   quantity: 1,
+//   id: 8,
+// };
 
-deleteItem(5);
-addItem(newItem);
+// deleteItem(5);
+// addItem(newItem);
 
 module.exports = { clear, addItem, deleteItem, state, subscribe };
