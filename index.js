@@ -1,3 +1,5 @@
+const Redux = require("redux");
+
 const addToCart = "ADDTOCART";
 const removeFromCart = "REMOVE";
 const clearCart = "CLEARCART";
@@ -42,7 +44,7 @@ const store = Redux.createStore(reducer);
 const state = store.getState();
 const subscribe = store.subscribe(() => {
   console.log(store.getState());
-  localStorage.setItem("generic-redux-cart", store.getState());
+  // localStorage.setItem("generic-redux-cart", store.getState());
   return store.getState();
 });
 
@@ -65,7 +67,7 @@ const newItem = {
   id: 8,
 };
 
-// deleteItem(5);
-// addItem(newItem);
+deleteItem(5);
+addItem(newItem);
 
 module.exports = { clear, addItem, deleteItem, state, subscribe };
