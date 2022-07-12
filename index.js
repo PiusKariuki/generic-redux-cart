@@ -39,22 +39,22 @@ const persistedState = () =>
 
 const store = Redux.createStore(reducer);
 
-export const state = store.getState();
-export const subscribe = store.subscribe(() => {
-  console.log(store.getState())
+const state = store.getState();
+const subscribe = store.subscribe(() => {
+  console.log(store.getState());
   localStorage.setItem("generic-redux-cart", store.getState());
   return store.getState();
 });
 
-export const addItem = (item) => {
+const addItem = (item) => {
   store.dispatch({ type: addToCart, payload: item });
 };
 
-export const deleteItem = (id) => {
+const deleteItem = (id) => {
   store.dispatch({ type: removeFromCart, payload: id });
 };
 
-export const clear = () => {
+const clear = () => {
   store.dispatch({ type: clearCart });
 };
 
@@ -65,5 +65,7 @@ const newItem = {
   id: 8,
 };
 
-deleteItem(5);
-addItem(newItem);
+// deleteItem(5);
+// addItem(newItem);
+
+module.exports = { clear, addItem, deleteItem, state, subscribe };
