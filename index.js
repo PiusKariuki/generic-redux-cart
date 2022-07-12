@@ -43,7 +43,6 @@ const store = Redux.createStore(reducer);
 
 const state = store.getState();
 const subscribe = store.subscribe(() => {
-  console.log(store.getState());
   // localStorage.setItem("generic-redux-cart", store.getState());
   return store.getState();
 });
