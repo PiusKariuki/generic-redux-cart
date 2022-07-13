@@ -5,7 +5,10 @@
 <h3>add to cart</h3>
 
 <pre>
-<h3>import { addItem } from "generic-redux-cart/index.js";</h3>
+<h3>import { store } from "generic-redux-cart/index.js";</h3>
+<h3>import {
+  addItem,
+} from "generic-redux-cart/ActionCreators.js";</h3>
 <h3>
 const newItem = {
 name: "Mazda cx9",
@@ -21,7 +24,9 @@ id: 8,
 
 <h3>clear cart</h3>
 <pre>
-<h3>import { clear} from "generic-redux-cart/index.js";</h3>
+<h3>import {
+  clear
+} from "generic-redux-cart/ActionCreators.js";</h3>
 
 <h3>clear();</h3>
 </pre>
@@ -31,14 +36,19 @@ id: 8,
 
 <pre>
 <h3>
-import {deleteItem} from "generic-redux-cart/index.js";
+import {
+  deleteItem
+} from "generic-redux-cart/ActionCreators.js";
 </h3>
 <h3>deleteItem(itemId)</h3>
 </pre>
 
 <h3>subscribe to cart changes</h3>
 <pre>
-<h3>import {subscribe} from "generic-redux-cart/index.js";</h3>
+<h3>import {store} from "generic-redux-cart/index.js";</h3>
 
-<h3>subscribe() //returns state</h3>
+<h3>  store.subscribe(() => {
+    console.log(store.getState());
+  });
+ </h3>
 </pre>
