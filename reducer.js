@@ -18,8 +18,8 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case removeFromCart: {
       const id = payload;
-      // return state.filter(item => item.id !== id);
-      return state
+      return state.filter(item => item.id !== id);
+      // return state
     }
 
     case clearCart:
