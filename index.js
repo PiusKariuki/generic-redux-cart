@@ -1,24 +1,23 @@
 const Redux = require("redux");
+const reduxThunk = require("redux-thunk").default;
+const {addToCart, removeFromCart,clearCart,changeQuantity} = require("./ActionTypes")
+const {getPersistentState, setPersistentState} = require("./localStorage")
 
-const addToCart = "ADDTOCART";
-const removeFromCart = "REMOVE";
-const clearCart = "CLEARCART";
-
+const applyMiddleware = Redux.applyMiddleware;
 const initialState = [];
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case addToCart: {
-      const { name, price, id, quantity } = payload;
-      if (state && state.find((item) => item.id === id)) {
-        return state.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity + quantity };
-          }
-          return item;
-        });
-      }
       return [...state, payload];
+    }
+
+    case changeQuantity: {
+      const { id, quantity } = payload;
+      return state.map((item) => {
+        if (item.id === id) return { ...item, quantity };
+        else return item;
+      });
     }
 
     case removeFromCart: {
@@ -34,21 +33,25 @@ const reducer = (state = initialState, { type, payload }) => {
   }
 };
 
-const persistedState = () =>
-  localStorage.getItem("generic-redux-cart") !== null
-    ? localStorage.getItem("generic-redux-cart")
-    : [];
-
-const store = Redux.createStore(reducer);
+const store = Redux.createStore(reducer,getPersistentState(), applyMiddleware(reduxThunk));
 
 const state = store.getState();
+
 const subscribe = store.subscribe(() => {
-  // localStorage.setItem("generic-redux-cart", store.getState());
+  setPersistentState(store);
+  console.log(store.getState())
   return store.getState();
 });
 
-const addItem = (item) => {
-  store.dispatch({ type: addToCart, payload: item });
+
+const addToCartThunk = (item) => (dispatch, getState) => {
+  let { id, quantity } = item;
+  let prevState = getState();
+  if (prevState.find((item) => item.id === id)) {
+    store.dispatch({ type: changeQuantity, payload: { id, quantity } });
+  } else {
+    store.dispatch({ type: addToCart, payload: item });
+  }
 };
 
 const deleteItem = (id) => {
@@ -59,14 +62,6 @@ const clear = () => {
   store.dispatch({ type: clearCart });
 };
 
-// const newItem = {
-//   name: "Mazda cx9",
-//   price: 240000,
-//   quantity: 1,
-//   id: 8,
-// };
+const addItem = (item) => store.dispatch(addToCartThunk(item));
 
-// deleteItem(5);
-// addItem(newItem);
-
-module.exports = { clear, addItem, deleteItem, state, subscribe };
+module.exports = { clear, addItem, deleteItem, state, subscribe, store };
